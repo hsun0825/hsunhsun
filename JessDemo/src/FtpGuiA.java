@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -69,6 +70,8 @@ public class FtpGuiA extends JFrame {
 	private JLabel lblNewLabel_2;
 	private static JTextField textField_5;
 	private JButton btnRun;
+	public String oldpath;
+	public String newpath;
 
 	/**
 	 * Launch the application.
@@ -341,4 +344,31 @@ public class FtpGuiA extends JFrame {
 	 */
 
 
+public class JprogressBar extends Thread{
+	
+	@Override
+	public void run() {
+		
+		File f1 = new File(newpath);
+		File f2 = new File(oldpath);
+		while(true){
+			try {
+				while(f1.length()<f2.length())
+				{
+						System.out.println("¶i«×¡G"+ new DecimalFormat("00.0%").format(((double)f1.length()/(double)f2.length())));
+				
+				sleep(1);
+				if(f1.length()==f2.length()){
+				
+			}
+				}
+			
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
+}
 }
