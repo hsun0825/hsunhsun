@@ -7,14 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.JButton;
@@ -26,11 +25,12 @@ import javax.swing.JProgressBar;
 public class FtpGuiA extends JFrame {
 
 	public static final boolean ActionListener = false;
-	private static final InputStream in = null;
+
 	public static final int d = 0;
+
 	private JPanel contentPane;
 	private static JTextField textField_1;
-	private JTextField textField_2;
+
 	private static JTextField textField;
 
 	private JLabel lblNewLabel_2;
@@ -51,6 +51,8 @@ public class FtpGuiA extends JFrame {
 				try {
 					FtpGuiA frame = new FtpGuiA();
 					frame.setVisible(true);
+				
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,6 +64,7 @@ public class FtpGuiA extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param <MySwingWorker>
 	 */
 	public FtpGuiA() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +107,9 @@ public class FtpGuiA extends JFrame {
 		contentPane.add(progressBar);
 		progressBar.setVisible(true);
 		progressBar.setStringPainted(true);
+	
+
+
 
 		btnRun = new JButton("RUN");
 		btnRun.setBounds(308, 169, 87, 53);
@@ -112,8 +118,10 @@ public class FtpGuiA extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TestFile testfile = new TestFile(progressBar,btnRun);
+			
+				
 				testfile.path();
-
+				
 			}
 		});
 
@@ -148,20 +156,19 @@ public class FtpGuiA extends JFrame {
 
 	public  class TestFile extends Thread{
 
-		private final String substring = null;
-		private final boolean True = false;
-		private final char[] filesall = null;
-
-		private final PrintStream FileName = null;
-		private PrintStream out;
-
+		
 		JProgressBar jProgressBar;
         JButton jButton;
         
-		public TestFile(JProgressBar progressBar, JButton button) {
+		public  TestFile(JProgressBar progressBar, JButton button) {
+			
+	
 			this.jProgressBar = progressBar;
             this.jButton = button;
+            
 		}
+	
+
 		
 		/**
 		 * @param oldpath 要複製的資料夾
@@ -216,26 +223,36 @@ public class FtpGuiA extends JFrame {
 						long length =filepath.length(); // 資料夾容量製做百分比
 
 						double temp = 0;// 複製容量用來製作百分比
-
+			
 						//DecimalFormat decimalFormat = new DecimalFormat("##.00%");// 格式化百分比
 
+
+						
 						// 循環讀取
 						while ((len = bis.read(bs)) != -1) {// 把字節轉換String 從0到len變成String
 
+							
+							
 							bos.write(bs, 0, len);// 通過流寫資料
 
 							temp += len;
-							double d = temp / length;
 							
+							double d = temp / length;
+												
 							System.out.println((int)(d * 100) + "%");
+							
 							jProgressBar.setValue((int)(d * 100));
+							
+											
 						}
+						
 						bos.close();
 						bis.close();
 					} catch (IOException e) {
 
 						e.printStackTrace();
 					}
+				
 				}
 		//	}; 
 		//}
@@ -323,5 +340,6 @@ public class FtpGuiA extends JFrame {
 //		}	 
 
 	}
+	
 
 }
